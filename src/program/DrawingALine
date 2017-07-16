@@ -1,0 +1,121 @@
+package myAI;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Toolkit;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class Draw extends JPanel {
+
+	@Override
+    public void paintComponent(Graphics g)
+    {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setColor(Color.BLACK);
+        g2.drawLine(0, 0, 100, 100);
+    }
+
+	public static void main(String[] args)
+    {
+		JFrame frame = new JFrame();
+		frame.setSize(800, 600);
+		frame.setTitle("myAI"); // sets the window title
+		frame.setResizable(false); // the user cannot resize the window
+		
+		/*
+		changes the dock icon
+		ImageIcon logoicon = new ImageIcon("star.png");
+		Image logo = logoicon.getImage();
+		frame.setIconImage(logo);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize(); // get the window to center
+		int w = frame.getSize().width;
+		int h = frame.getSize().height;
+		int x = (dim.width-w)/2;
+		int y = (dim.height-h)/2;
+		frame.setLocation(x, y); // move the window accordingly
+		*/
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Draw game = new Draw();
+        frame.setContentPane(game);
+        frame.setVisible(true);
+        frame.invalidate();
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public class MoveCircle implements KeyListener {
+		
+		private BitSet keyBits = new BitSet(256);
+
+	    @Override
+	    public void keyPressed(final KeyEvent event) {
+	        int keyCode = event.getKeyCode();
+	        keyBits.set(keyCode);
+	        
+	        if (isKeyPressed(KeyEvent.VK_DOWN)) {
+	        	System.out.println("YES");
+	        }
+	        System.out.println(keyBits.size());
+	    }
+
+	    @Override
+	    public void keyReleased(final KeyEvent event) {
+	        int keyCode = event.getKeyCode();
+	        keyBits.clear(keyCode);
+	    }
+
+	    @Override
+	    public void keyTyped(final KeyEvent event) {
+	        // don't care
+	    }
+
+	    public boolean isKeyPressed(final int keyCode) {
+	        return keyBits.get(keyCode);
+	    }
+
+    }
+	
+	private void createAndDisplayGUI(Draw window)
+    {
+        frame = new JFrame();
+        Container container = frame.getContentPane();       
+        container.add(window);
+        window.addKeyListener(new MoveCircle());        
+        frame.setSize(800, 600);
+		frame.setTitle("myAI"); // sets the window title
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false); // the user cannot resize the window
+		frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        window.requestFocusInWindow();
+        
+    }
+	
+	
+	
+	
+}
+
